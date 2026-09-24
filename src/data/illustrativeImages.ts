@@ -23,8 +23,8 @@ export const ILLUSTRATIVE_ITEMS: PortfolioItem[] = [
     },
     "aspectRatio": "16 / 10",
     "description": {
-      "en": "Explore landscaping and discuss your requirements with Mr Chan.",
-      "bm": "Terokai landskap dan bincangkan keperluan anda dengan Mr Chan."
+      "en": "Grass cutting and overgrowth clearing with a brush cutter.",
+      "bm": "Pemotongan rumput dan pembersihan tumbuhan liar menggunakan mesin pemotong rumput."
     },
     "details": {
       "en": "Work scope, availability, costs and schedule are subject to confirmation.",
@@ -87,8 +87,8 @@ export const ILLUSTRATIVE_ITEMS: PortfolioItem[] = [
     },
     "aspectRatio": "16 / 10",
     "description": {
-      "en": "Explore landscaping and discuss your requirements with Mr Chan.",
-      "bm": "Terokai landskap dan bincangkan keperluan anda dengan Mr Chan."
+      "en": "Lawn and garden-bed maintenance beside a landscaped walkway.",
+      "bm": "Penyelenggaraan rumput dan batas tanaman di sepanjang laluan pejalan kaki."
     },
     "details": {
       "en": "Work scope, availability, costs and schedule are subject to confirmation.",
@@ -181,8 +181,8 @@ export const ILLUSTRATIVE_ITEMS: PortfolioItem[] = [
     },
     "aspectRatio": "16 / 10",
     "description": {
-      "en": "Explore construction and discuss your requirements with Mr Chan.",
-      "bm": "Terokai pembinaan dan bincangkan keperluan anda dengan Mr Chan."
+      "en": "Steel reinforcement installation and tying for concrete construction.",
+      "bm": "Pemasangan dan pengikatan tetulang keluli untuk pembinaan konkrit."
     },
     "details": {
       "en": "Work scope, availability, costs and schedule are subject to confirmation.",
@@ -212,8 +212,8 @@ export const ILLUSTRATIVE_ITEMS: PortfolioItem[] = [
     },
     "aspectRatio": "16 / 10",
     "description": {
-      "en": "Explore construction and discuss your requirements with Mr Chan.",
-      "bm": "Terokai pembinaan dan bincangkan keperluan anda dengan Mr Chan."
+      "en": "Concrete pouring and levelling under site lighting at night.",
+      "bm": "Penuangan dan perataan konkrit di bawah pencahayaan tapak pada waktu malam."
     },
     "details": {
       "en": "Work scope, availability, costs and schedule are subject to confirmation.",
@@ -336,8 +336,8 @@ export const ILLUSTRATIVE_ITEMS: PortfolioItem[] = [
     },
     "aspectRatio": "16 / 10",
     "description": {
-      "en": "Explore wastewater treatment plant (wwtp) and discuss your requirements with Mr Chan.",
-      "bm": "Terokai loji rawatan air sisa (wwtp) dan bincangkan keperluan anda dengan Mr Chan."
+      "en": "Water sample inspection beside a wastewater treatment tank.",
+      "bm": "Pemeriksaan sampel air di sebelah tangki rawatan air sisa."
     },
     "details": {
       "en": "Work scope, availability, costs and schedule are subject to confirmation.",
@@ -398,8 +398,8 @@ export const ILLUSTRATIVE_ITEMS: PortfolioItem[] = [
     },
     "aspectRatio": "16 / 10",
     "description": {
-      "en": "Explore cleaning services and discuss your requirements with Mr Chan.",
-      "bm": "Terokai perkhidmatan pembersihan dan bincangkan keperluan anda dengan Mr Chan."
+      "en": "Indoor hard-floor cleaning with a rotary floor machine.",
+      "bm": "Pembersihan lantai keras dalaman menggunakan mesin pencuci lantai berputar."
     },
     "details": {
       "en": "Work scope, availability, costs and schedule are subject to confirmation.",
