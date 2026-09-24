@@ -269,8 +269,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </h3>
             <p className="text-emerald-100 text-lg sm:text-xl">
               {lang === 'en'
-                ? 'We bundle civil works, site maintenance, and ongoing logistics into unified service packages.'
-                : 'Kami menggabungkan kerja sivil, penyelenggaraan tapak dan logistik berterusan dalam satu pakej bersepadu.'}
+                ? 'Discuss the combination of NRC services you need. Scope, availability and terms will be confirmed with you.'
+                : 'Bincangkan gabungan perkhidmatan NRC yang diperlukan. Skop, ketersediaan dan terma akan disahkan bersama anda.'}
             </p>
           </div>
 

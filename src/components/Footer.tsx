@@ -20,7 +20,7 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
               onClick={() => onNavigate('/')}
               className="inline-block cursor-pointer"
             >
-              <NrcLogo className="h-14 brightness-110" variant="light" />
+              <NrcLogo className="w-60" variant="light" />
             </div>
 
             <p className="text-slate-300 text-lg leading-relaxed max-w-lg">
@@ -146,7 +146,7 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
             {lang === 'en' ? 'All rights reserved.' : 'Hak cipta terpelihara.'}
           </p>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
             <button
               onClick={() => onNavigate('/')}
               className="hover:text-white transition-colors cursor-pointer"

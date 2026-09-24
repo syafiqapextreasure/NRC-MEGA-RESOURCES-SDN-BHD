@@ -1,11 +1,9 @@
 import React from 'react';
 import {
-  ShieldCheck,
   Target,
   Compass,
   CheckCircle,
   Building,
-  UserCheck,
   Briefcase,
   ChevronDown,
   ArrowRight,
@@ -26,7 +24,7 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
   const director = ORG_CHART.find((n) => n.name === 'N. RAVI CHANDRAN')!;
-  const managers = ORG_CHART.filter((n) => n.reportsTo === 'N. RAVI CHANDRAN');
+  const departments = ORG_CHART.filter((n) => n.reportsTo === director.name);
 
   return (
     <div className="space-y-20 pb-20">
@@ -42,8 +40,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
             </h1>
             <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed font-normal">
               {lang === 'en'
-                ? 'A versatile, multi-service organization built on operational integrity, responsive workforce welfare, and unified client delivery.'
-                : 'Sebuah organisasi serba boleh pelbagai perkhidmatan yang berteraskan integriti operasi, kebajikan pekerja yang prihatin dan pelaksanaan bersepadu.'}
+                ? 'Construction, cleaning, landscaping, manpower and logistics services through one provider.'
+                : 'Perkhidmatan pembinaan, pembersihan, landskap, tenaga kerja dan logistik melalui satu pembekal.'}
             </p>
           </div>
         </div>
@@ -182,8 +180,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
             </h2>
             <p className="text-slate-300 text-lg leading-relaxed">
               {lang === 'en'
-                ? 'Clear reporting hierarchy ensuring operational accountability, employee safety, and prompt client communication.'
-                : 'Hierarki pelaporan yang jelas bagi memastikan kebertanggungjawaban operasi, keselamatan pekerja dan komunikasi pantas pelanggan.'}
+                ? 'Our organisation brings together Finance and Admin, Foreign Welfare Affairs, and Sales & Marketing under the Director.'
+                : 'Organisasi kami merangkumi Kewangan dan Pentadbiran, Hal Ehwal Kebajikan Pekerja Asing serta Jualan & Pemasaran di bawah Pengarah.'}
             </p>
           </div>
 
@@ -199,9 +197,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
               <p className="text-emerald-200 text-sm font-semibold uppercase tracking-wider">
                 {director.department[lang]}
               </p>
-              <p className="text-slate-200 text-base pt-2 border-t border-emerald-700/60 leading-relaxed">
-                {director.description?.[lang]}
-              </p>
+
             </div>
 
             {/* Connecting Line */}
@@ -213,42 +209,32 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
             </div>
           </div>
 
-          {/* Reporting Managers (Stacking clearly on mobile) */}
+          {/* Department reporting lines and their managers remain grouped on mobile. */}
           <div className="space-y-4">
-            <div className="text-center text-xs uppercase tracking-widest text-emerald-400 font-bold">
+            <div className="text-center text-sm uppercase tracking-widest text-emerald-400 font-bold">
               {lang === 'en'
-                ? 'Reporting to Director'
-                : 'Melapor Terus Kepada Pengarah'}
+                ? 'Departments Reporting to the Director'
+                : 'Jabatan di Bawah Pengarah'}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {managers.map((mgr) => (
-                <div
-                  key={mgr.name}
-                  className="bg-slate-800/90 rounded-2xl p-6 border border-slate-700 hover:border-emerald-500 transition-colors space-y-3"
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {departments.map((department) => (
+                <section
+                  key={department.name}
+                  className="min-w-0 bg-slate-800/90 rounded-2xl p-5 sm:p-6 border border-slate-700 space-y-4"
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
-                      {mgr.role[lang]}
-                    </span>
-                    <span className="text-xs text-slate-400">
-                      → N. Ravi Chandran
-                    </span>
-                  </div>
-
-                  <div>
-                    <h4 className="text-xl font-bold text-white tracking-tight">
-                      {mgr.name}
-                    </h4>
-                    <span className="text-sm font-semibold text-emerald-400 block mt-0.5">
-                      {mgr.department[lang]}
-                    </span>
-                  </div>
-
-                  <p className="text-slate-300 text-sm leading-relaxed pt-2 border-t border-slate-700/60">
-                    {mgr.description?.[lang]}
-                  </p>
-                </div>
+                  <h3 className="text-xl font-bold text-emerald-300 break-words">
+                    {department.department[lang]}
+                  </h3>
+                  <ul className="space-y-4 border-t border-slate-700 pt-4">
+                    {ORG_CHART.filter((node) => node.reportsTo === department.name).map((manager) => (
+                      <li key={manager.name} className="rounded-xl bg-slate-900 p-4 border border-slate-700 space-y-2">
+                        <h4 className="text-xl font-bold text-white break-words">{manager.name}</h4>
+                        <p className="text-base text-slate-300">{manager.role[lang]}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
               ))}
             </div>
           </div>
@@ -264,13 +250,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">
               {lang === 'en'
-                ? 'Corporate Execution Capabilities'
-                : 'Keupayaan Pelaksanaan Korporat'}
+                ? 'Corporate Achievements'
+                : 'Pencapaian Korporat'}
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
               {lang === 'en'
-                ? 'Delivering consistent, compliant services across challenging industrial and commercial environments.'
-                : 'Membekalkan perkhidmatan yang konsisten dan patuh undang-undang di persekitaran industri dan komersial yang mencabar.'}
+                ? 'Highlights stated in our company profile.'
+                : 'Sorotan pencapaian yang dinyatakan dalam profil syarikat kami.'}
             </p>
           </div>
 
@@ -281,29 +267,29 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
               </div>
               <h3 className="text-2xl font-bold text-slate-900">
                 {lang === 'en'
-                  ? 'Multi-Discipline Site Mobilization'
-                  : 'Mobilisasi Tapak Pelbagai Bidang'}
+                  ? 'CIDB Grade 5'
+                  : 'CIDB Gred 5'}
               </h3>
               <p className="text-slate-600 text-lg leading-relaxed">
                 {lang === 'en'
-                  ? 'Demonstrated versatility in managing civil earthworks, rebar foundation assembly, night casting shifts, and structural framing alongside plant sanitation and commercial grounds rehabilitation.'
-                  : 'Keupayaan serba boleh terbukti dalam mengurus kerja tanah, pemasangan asas tetulang besi, giliran kerja malam konkrit dan rangka struktur di samping sanitasi loji dan pemulihan landskap komersial.'}
+                  ? 'Our company profile lists CIDB Grade 5 certification. This profile statement is not independent verification of current registration status; please contact us for current documentation.'
+                  : 'Profil syarikat kami menyenaraikan pensijilan CIDB Gred 5. Pernyataan profil ini bukan pengesahan bebas status pendaftaran semasa; sila hubungi kami untuk mendapatkan dokumen terkini.'}
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm space-y-4">
               <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
-                <UserCheck className="w-6 h-6" />
+                <Briefcase className="w-6 h-6" />
               </div>
               <h3 className="text-2xl font-bold text-slate-900">
                 {lang === 'en'
-                  ? 'Integrated Worker Welfare & Safety Induction'
-                  : 'Integrasi Kebajikan Pekerja & Induksi Keselamatan'}
+                  ? 'Client Partnerships & Service Delivery'
+                  : 'Kerjasama Pelanggan & Penyampaian Perkhidmatan'}
               </h3>
               <p className="text-slate-600 text-lg leading-relaxed">
                 {lang === 'en'
-                  ? 'Established formalized Foreign Welfare Affairs management ensuring full compliance with Malaysian statutory labour regulations, hygienic worker lodgings, and occupational health protocols.'
-                  : 'Pengurusan Hal Ehwal Kebajikan Pekerja Asing secara formal memastikan pematuhan penuh undang-undang buruh Malaysia, tempat penginapan pekerja yang bersih serta protokol keselamatan OSHA.'}
+                  ? 'The company profile highlights successful partnerships with key clients and recognition for sustainable and efficient service delivery.'
+                  : 'Profil syarikat mengetengahkan kerjasama yang berjaya dengan pelanggan utama serta pengiktirafan bagi penyampaian perkhidmatan yang mampan dan cekap.'}
               </p>
             </div>
           </div>
@@ -322,8 +308,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
               {lang === 'en'
-                ? 'Our structured Environmental, Social, and Governance framework drives sustainable value for our clients, workforce, and communities.'
-                : 'Rangka kerja Alam Sekitar, Sosial dan Tadbir Urus yang berstruktur memacu nilai mampan untuk pelanggan, tenaga kerja dan komuniti kita.'}
+                ? 'Our company profile sets out the following Environmental, Social, and Governance commitments.'
+                : 'Profil syarikat kami menggariskan komitmen Alam Sekitar, Sosial dan Tadbir Urus berikut.'}
             </p>
           </div>
 
@@ -366,7 +352,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
 
       {/* Direct CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl bg-slate-900 text-white p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="rounded-2xl bg-slate-900 text-white p-8 sm:p-10 flex flex-col md:flex-row flex-wrap items-center justify-between gap-6">
           <div>
             <h3 className="text-2xl font-bold text-white">
               {lang === 'en'
@@ -380,7 +366,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
             </p>
           </div>
 
-          <div className="flex gap-4 shrink-0">
+          <div className="flex flex-wrap gap-4 w-full md:w-auto min-w-0">
             <a
               href={COMPANY_INFO.whatsappUrl}
               target="_blank"

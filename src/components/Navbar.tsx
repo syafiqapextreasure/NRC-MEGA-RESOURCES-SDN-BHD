@@ -43,17 +43,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="sticky top-0 z-40 w-full glass-nav shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between min-h-28 py-3 gap-3">
           {/* Brand Logo Zone */}
           <div
             onClick={() => handleLinkClick('/')}
             className="flex items-center cursor-pointer group"
           >
-            <NrcLogo className="h-12 sm:h-14 py-1" />
+            <NrcLogo className="w-44 sm:w-52" />
           </div>
 
           {/* Desktop Navigation Links (Zone 2) */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <nav className="hidden xl:flex items-center gap-1 lg:gap-2">
             {navLinks.map((link) => {
               const isActive = currentPath === link.path;
               return (
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Actions Zone (Zone 3): Lang Switcher & WhatsApp CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             {/* Language Switcher */}
             <button
               onClick={onToggleLang}
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Right Controls: Lang Toggle & Hamburger Button */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex xl:hidden items-center gap-2">
             <button
               onClick={onToggleLang}
               className="min-h-[48px] min-w-[48px] px-2.5 py-1.5 flex items-center justify-center gap-1 rounded-xl border border-slate-300 bg-white text-emerald-800 font-bold text-sm shadow-xs"
@@ -133,7 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Slide-down Menu Panel */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 shadow-xl animate-fadeIn">
+        <div className="xl:hidden border-t border-slate-200 bg-white/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 shadow-xl animate-fadeIn">
           {navLinks.map((link) => {
             const isActive = currentPath === link.path;
             return (

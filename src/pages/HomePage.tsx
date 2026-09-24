@@ -262,8 +262,8 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <p className="text-slate-200 text-lg sm:text-xl leading-relaxed">
               {lang === 'en'
-                ? 'NRC MEGA RESOURCES SDN BHD was built around a straightforward objective: to provide clients convenient, reliable access to diverse essential services through one accountable provider. By combining experienced leadership, a dedicated workforce welfare framework, and strict safety governance, we help businesses run smoothly.'
-                : 'NRC MEGA RESOURCES SDN BHD dibangunkan berasaskan objektif yang jelas: membekalkan akses mudah dan boleh diharap kepada pelbagai perkhidmatan penting menerusi satu pembekal yang bertanggungjawab. Dengan menggabungkan kepimpinan berpengalaman, kebajikan pekerja terjamin dan tadbir urus keselamatan ketat, kami menyokong kelancaran perniagaan anda.'}
+                ? 'NRC MEGA RESOURCES SDN BHD brings construction, cleaning, landscaping, manpower, logistics and construction material storage together through one provider. Contact our team to discuss the services your business needs.'
+                : 'NRC MEGA RESOURCES SDN BHD menghimpunkan pembinaan, pembersihan, landskap, tenaga kerja, logistik dan penyimpanan bahan binaan melalui satu pembekal. Hubungi pasukan kami untuk membincangkan keperluan perniagaan anda.'}
             </p>
 
             <div className="pt-4 flex flex-wrap gap-4">
@@ -378,8 +378,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h3>
             <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
               {lang === 'en'
-                ? 'We prioritize green waste recovery in landscaping, eco-safe cleaning agents, and responsible wastewater plant handling.'
-                : 'Kami mengutamakan pemulihan sisa hijau dalam landskap, agen pembersih mesra alam dan pengurusan loji air sisa yang bertanggungjawab.'}
+                ? 'Our environmental commitments include energy efficiency, waste reduction and responsible land use.'
+                : 'Komitmen alam sekitar kami merangkumi kecekapan tenaga, pengurangan sisa dan penggunaan tanah yang bertanggungjawab.'}
             </p>
           </div>
 
@@ -392,8 +392,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h3>
             <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
               {lang === 'en'
-                ? 'Rigorous structural rebar spacing, safe scaffolding erection, and pristine hygiene cleaning protocols on every deployment.'
-                : 'Penjarakan besi tetulang struktur yang tepat, pemasangan perancah selamat dan protokol kebersihan rapi pada setiap tugasan.'}
+                ? 'We aim to provide high-value services tailored to client needs, guided by quality, reliability and integrity.'
+                : 'Kami berusaha menyediakan perkhidmatan bernilai tinggi mengikut keperluan pelanggan, berpandukan kualiti, kebolehpercayaan dan integriti.'}
             </p>
           </div>
 
@@ -406,8 +406,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h3>
             <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
               {lang === 'en'
-                ? 'Dedicated management of foreign welfare affairs, proper accommodation, and constant occupational health and safety induction.'
-                : 'Pengurusan kebajikan pekerja asing yang teliti, tempat tinggal selesa serta induksi keselamatan dan kesihatan berterusan.'}
+                ? 'Our organisation includes a Foreign Welfare Affairs department led by DEEPANRAJ.'
+                : 'Organisasi kami merangkumi jabatan Hal Ehwal Kebajikan Pekerja Asing yang diketuai oleh DEEPANRAJ.'}
             </p>
           </div>
         </div>
@@ -415,7 +415,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* 6. CLEAR WHATSAPP ENQUIRY CTA BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-emerald-800 text-white p-8 sm:p-12 shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="rounded-3xl bg-emerald-800 text-white p-8 sm:p-12 shadow-xl flex flex-col xl:flex-row items-center justify-between gap-8">
           <div className="space-y-3 text-center md:text-left max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               {lang === 'en'
@@ -424,8 +424,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h2>
             <p className="text-emerald-100 text-lg sm:text-xl leading-relaxed">
               {lang === 'en'
-                ? 'Contact Mr Chan directly on WhatsApp for prompt service quotes, workforce allocations, or site visits.'
-                : 'Hubungi Mr Chan secara terus melalui WhatsApp untuk sebut harga pantas, peruntukan tenaga kerja atau lawatan tapak.'}
+                ? 'Contact Mr Chan on WhatsApp to discuss service requirements, quotations and possible site visits.'
+                : 'Hubungi Mr Chan melalui WhatsApp untuk membincangkan keperluan perkhidmatan, sebut harga dan kemungkinan lawatan tapak.'}
             </p>
             <div className="text-emerald-200 text-sm font-semibold">
               {COMPANY_INFO.contactPerson} • {COMPANY_INFO.phoneDisplay}

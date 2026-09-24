@@ -61,8 +61,8 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
           </h1>
           <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed max-w-3xl font-normal">
             {lang === 'en'
-              ? 'Explore our verified photographic records across civil construction, landscaping rejuvenation, industrial effluent treatment, and commercial sanitation.'
-              : 'Terokai rekod fotografi kerja kami merangkumi pembinaan sivil, pemulihan landskap, loji rawatan air sisa industri dan sanitasi komersial.'}
+              ? 'Explore construction, landscaping, wastewater treatment plant and cleaning service themes.'
+              : 'Terokai tema perkhidmatan pembinaan, landskap, loji rawatan air sisa dan pembersihan.'}
           </p>
         </div>
       </section>
@@ -324,8 +324,8 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
             </h3>
             <p className="text-slate-300 text-lg">
               {lang === 'en'
-                ? 'Share your project scope with Mr Chan for a direct consultation and swift operational assessment.'
-                : 'Kongsikan skop projek anda dengan Mr Chan untuk sesi perbincangan dan penilaian operasi pantas.'}
+                ? 'Share your project scope with Mr Chan for a discussion of your requirements.'
+                : 'Kongsikan skop projek anda dengan Mr Chan untuk perbincangan keperluan anda.'}
             </p>
           </div>
 

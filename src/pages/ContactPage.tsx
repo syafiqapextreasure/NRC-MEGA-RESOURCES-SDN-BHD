@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Phone,
   Mail,
   MessageCircle,
   User,
-  Send,
   HelpCircle,
-  CheckCircle2,
   Copy,
   Check,
 } from 'lucide-react';
@@ -28,57 +26,60 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
   });
 
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleCopyEmail = (email: string) => {
-    navigator.clipboard.writeText(email);
-    setCopiedEmail(email);
-    setTimeout(() => setCopiedEmail(null), 2500);
+  const handleCopyEmail = async (email: string) => {
+    setCopiedEmail(null);
+    setCopyError(false);
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopiedEmail(email);
+    } catch {
+      setCopyError(true);
+    }
+  };
+
+  const validateForm = () => {
+    const form = formRef.current;
+    if (!form) return false;
+    const name = form.elements.namedItem('name') as HTMLInputElement;
+    const message = form.elements.namedItem('message') as HTMLTextAreaElement;
+    name.setCustomValidity(formData.name.trim() ? '' : lang === 'en' ? 'Please enter your name.' : 'Sila masukkan nama anda.');
+    message.setCustomValidity(formData.message.trim() ? '' : lang === 'en' ? 'Please describe your requirements.' : 'Sila nyatakan keperluan anda.');
+    return form.reportValidity();
+  };
+
+  const serviceName = formData.service === 'multiple'
+    ? (lang === 'en' ? 'Multiple / Integrated Services' : 'Pelbagai / Perkhidmatan Bersepadu')
+    : SERVICES.find((s) => s.id === formData.service)?.title[lang] ?? '';
+
+  const buildDraft = () => {
+    const labels = lang === 'en'
+      ? ['Name', 'Company', 'Service', 'Contact', 'Location', 'Requirements']
+      : ['Nama', 'Syarikat', 'Perkhidmatan', 'Hubungi', 'Lokasi', 'Keperluan'];
+    const values = [formData.name, formData.company, serviceName, formData.phone, formData.location, formData.message];
+    const greeting = lang === 'en'
+      ? 'Hello Mr Chan, I would like to make an enquiry to NRC MEGA RESOURCES SDN BHD.'
+      : 'Salam Mr Chan, saya ingin membuat pertanyaan kepada NRC MEGA RESOURCES SDN BHD.';
+    return greeting + '\n\n' + values.map((value, index) => value.trim() ? `• ${labels[index]}: ${value.trim()}` : '').filter(Boolean).join('\n');
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const selectedServiceObj = SERVICES.find((s) => s.id === formData.service);
-    const serviceName = selectedServiceObj ? selectedServiceObj.title[lang] : formData.service;
-
-    let text =
-      lang === 'en'
-        ? `Hello Mr Chan, I would like to submit an enquiry to NRC MEGA RESOURCES SDN BHD.\n\n` +
-          `• Name: ${formData.name}\n` +
-          (formData.company ? `• Company: ${formData.company}\n` : '') +
-          `• Service: ${serviceName}\n` +
-          (formData.phone ? `• Contact: ${formData.phone}\n` : '') +
-          (formData.location ? `• Location: ${formData.location}\n` : '') +
-          `• Requirements: ${formData.message}`
-        : `Salam Mr Chan, saya ingin membuat pertanyaan kepada NRC MEGA RESOURCES SDN BHD.\n\n` +
-          `• Nama: ${formData.name}\n` +
-          (formData.company ? `• Syarikat: ${formData.company}\n` : '') +
-          `• Perkhidmatan: ${serviceName}\n` +
-          (formData.phone ? `• Hubungi: ${formData.phone}\n` : '') +
-          (formData.location ? `• Lokasi: ${formData.location}\n` : '') +
-          `• Keperluan: ${formData.message}`;
-
-    const encodedText = encodeURIComponent(text);
+    if (!validateForm()) return;
+    const encodedText = encodeURIComponent(buildDraft());
     const waUrl = `https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${encodedText}`;
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleEmailDirect = () => {
-    const selectedServiceObj = SERVICES.find((s) => s.id === formData.service);
-    const serviceName = selectedServiceObj ? selectedServiceObj.title.en : formData.service;
-
+    if (!validateForm()) return;
     const subject = encodeURIComponent(
-      `Service Enquiry: ${serviceName} - ${formData.name || 'Website Visitor'}`
+      `${lang === 'en' ? 'Service Enquiry' : 'Pertanyaan Perkhidmatan'}: ${serviceName} - ${formData.name.trim()}`
     );
-    const body = encodeURIComponent(
-      `To: NRC MEGA RESOURCES SDN BHD (Attn: Mr Chan)\n\n` +
-        `Name: ${formData.name}\n` +
-        `Company: ${formData.company}\n` +
-        `Service Required: ${serviceName}\n` +
-        `Phone: ${formData.phone}\n` +
-        `Location: ${formData.location}\n` +
-        `Requirements:\n${formData.message}\n`
-    );
+    const body = encodeURIComponent(buildDraft());
 
     const mailto = `mailto:${COMPANY_INFO.emails[0]}?cc=${COMPANY_INFO.emails[1]}&subject=${subject}&body=${body}`;
     window.location.href = mailto;
@@ -87,32 +88,32 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
   const faqs = [
     {
       q: {
-        en: 'How can I quickly request a service quote or consultation?',
-        bm: 'Bagaimanakah cara terpantas untuk meminta sebut harga atau rundingan?',
+        en: 'How can I request a service quote or consultation?',
+        bm: 'Bagaimanakah cara meminta sebut harga atau rundingan?',
       },
       a: {
-        en: 'The fastest method is by contacting Mr Chan directly via WhatsApp (011-10789912) or using our WhatsApp Enquiry Form on this page. You can also send an email to bb4459613@gmail.com and sundrisupramaniam@gmail.com.',
-        bm: 'Cara terpantas adalah dengan menghubungi Mr Chan terus melalui WhatsApp (011-10789912) atau menggunakan Borang Pertanyaan WhatsApp di laman ini. Anda juga boleh menghantar emel ke bb4459613@gmail.com dan sundrisupramaniam@gmail.com.',
+        en: 'You can contact Mr Chan directly via WhatsApp (011-10789912) or using our WhatsApp Enquiry Form on this page. You can also send an email to bb4459613@gmail.com and sundrisupramaniam@gmail.com.',
+        bm: 'Anda boleh menghubungi Mr Chan terus melalui WhatsApp (011-10789912) atau menggunakan Borang Pertanyaan WhatsApp di laman ini. Anda juga boleh menghantar emel ke bb4459613@gmail.com dan sundrisupramaniam@gmail.com.',
       },
     },
     {
       q: {
-        en: 'Can NRC support multiple service requirements together under one contract?',
-        bm: 'Bolehkah NRC mengendalikan pelbagai keperluan perkhidmatan di bawah satu kontrak?',
+        en: 'Can I enquire about multiple services together?',
+        bm: 'Bolehkah saya bertanya tentang beberapa perkhidmatan serentak?',
       },
       a: {
-        en: 'Yes. NRC MEGA RESOURCES SDN BHD is structured specifically to provide clients convenient access to construction, cleaning, landscaping, manpower supply, and logistics through one reliable partner.',
-        bm: 'Ya. NRC MEGA RESOURCES SDN BHD distrukturkan khusus bagi memberikan pelanggan akses mudah kepada pembinaan, pembersihan, landskap, pembekalan tenaga kerja dan logistik menerusi satu rakan berwibawa.',
+        en: 'Yes. NRC offers construction, material storage, cleaning, landscaping, manpower supply and logistics as a single provider. Please discuss the required scope, availability and contract terms with Mr Chan.',
+        bm: 'Ya. NRC menawarkan pembinaan, penyimpanan bahan, pembersihan, landskap, tenaga kerja dan logistik sebagai satu penyedia. Sila bincangkan skop, ketersediaan dan terma kontrak dengan Mr Chan.',
       },
     },
     {
       q: {
-        en: 'How does NRC manage workforce welfare and safety?',
-        bm: 'Bagaimanakah NRC mengurus kebajikan tenaga kerja dan keselamatan?',
+        en: 'Who is listed for Foreign Welfare Affairs?',
+        bm: 'Siapakah yang disenaraikan bagi Hal Ehwal Kebajikan Pekerja Asing?',
       },
       a: {
-        en: 'NRC maintains dedicated managers for Foreign Welfare Affairs (Deepanraj) and Safety & Health (Kumar), ensuring rigorous compliance with Malaysian labor standards, comfortable lodging, and continuous site safety induction.',
-        bm: 'NRC mempunyai pengurus berdedikasi bagi Hal Ehwal Kebajikan Pekerja Asing (Deepanraj) dan Keselamatan & Kesihatan (Kumar), memastikan pematuhan penuh undang-undang buruh, penginapan teratur dan taklimat keselamatan OSHA berterusan.',
+        en: 'The company profile lists Deepanraj under Foreign Welfare Affairs. Please contact Mr Chan to discuss project-specific welfare and safety requirements.',
+        bm: 'Profil syarikat menyenaraikan Deepanraj di bawah Hal Ehwal Kebajikan Pekerja Asing. Sila hubungi Mr Chan untuk membincangkan keperluan kebajikan dan keselamatan khusus projek.',
       },
     },
     {
@@ -121,8 +122,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
         bm: 'Apakah maklumat yang perlu saya sediakan semasa membuat pertanyaan?',
       },
       a: {
-        en: 'Sharing your company name, target project location, service requirements (e.g. civil construction, grass cutting, factory cleanup, or workforce numbers), and timeline helps us provide immediate guidance.',
-        bm: 'Menyatakan nama syarikat anda, lokasi projek sasaran, jenis perkhidmatan yang diperlukan (cth. pembinaan sivil, mesin rumput, pembersihan kilang atau bilangan pekerja) serta garis masa akan memudahkan kami memberi maklum balas pantas.',
+        en: 'Sharing your company name, target project location, service requirements (e.g. civil construction, grass cutting, factory cleanup, or workforce numbers), and timeline helps us understand your enquiry.',
+        bm: 'Menyatakan nama syarikat anda, lokasi projek sasaran, jenis perkhidmatan yang diperlukan (cth. pembinaan sivil, mesin rumput, pembersihan kilang atau bilangan pekerja) serta garis masa membantu kami memahami pertanyaan anda.',
       },
     },
   ];
@@ -140,8 +141,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
           </h1>
           <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed max-w-3xl font-normal">
             {lang === 'en'
-              ? 'Connect directly with Mr Chan (Chandran) for immediate quotes, project planning, workforce supply, or logistics arrangements.'
-              : 'Hubungi terus Mr Chan (Chandran) untuk sebut harga segera, perancangan projek, pembekalan tenaga kerja atau aturan logistik.'}
+              ? 'Connect directly with Mr Chan (Chandran) to discuss quotes, project planning, workforce supply, or logistics arrangements.'
+              : 'Hubungi terus Mr Chan (Chandran) untuk membincangkan sebut harga, perancangan projek, pembekalan tenaga kerja atau aturan logistik.'}
           </p>
         </div>
       </section>
@@ -238,7 +239,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                     <button
                       onClick={() => handleCopyEmail(email)}
                       className="min-w-[40px] min-h-[40px] p-2 flex items-center justify-center rounded-lg bg-white hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer border border-slate-200 shrink-0"
-                      aria-label={`Copy email ${email}`}
+                      aria-label={`${lang === 'en' ? 'Copy email' : 'Salin emel'} ${email}`}
                     >
                       {copiedEmail === email ? (
                         <Check className="w-4 h-4 text-emerald-600" />
@@ -248,16 +249,21 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                     </button>
                   </div>
                 ))}
+                <p role="status" aria-live="polite" className="text-sm text-slate-700 break-words">
+                  {copyError
+                    ? (lang === 'en' ? 'Could not copy. Please select and copy the email address manually.' : 'Tidak dapat menyalin. Sila pilih dan salin alamat emel secara manual.')
+                    : copiedEmail ? (lang === 'en' ? `Copied: ${copiedEmail}` : `Disalin: ${copiedEmail}`) : ''}
+                </p>
               </div>
 
               {/* Guidance note */}
               <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-100 text-slate-700 text-sm leading-relaxed">
                 <span className="font-bold text-emerald-900 block mb-1">
-                  {lang === 'en' ? 'Customer Assurance:' : 'Jaminan Pelanggan:'}
+                  {lang === 'en' ? 'Before You Send:' : 'Sebelum Menghantar:'}
                 </span>
                 {lang === 'en'
-                  ? 'All enquiries are received directly by Mr Chan for prompt review and transparent coordination.'
-                  : 'Semua pertanyaan diterima terus oleh Mr Chan untuk semakan pantas dan koordinasi telus.'}
+                  ? 'This form prepares a draft only. Review and send it in WhatsApp or your email app; this website does not confirm delivery.'
+                  : 'Borang ini hanya menyediakan draf. Semak dan hantar melalui WhatsApp atau aplikasi emel anda; laman ini tidak mengesahkan penghantaran.'}
               </div>
             </div>
           </div>
@@ -267,7 +273,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
             <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-6">
               <div className="space-y-2 border-b border-slate-100 pb-5">
                 <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-800 block">
-                  {lang === 'en' ? 'Direct Submission' : 'Penyerahan Terus'}
+                  {lang === 'en' ? 'Prepare an Enquiry' : 'Sediakan Pertanyaan'}
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                   {lang === 'en'
@@ -276,21 +282,23 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                 </h2>
                 <p className="text-slate-600 text-base leading-relaxed">
                   {lang === 'en'
-                    ? 'Fill out your requirements below to instantly generate a formatted WhatsApp message or send an email.'
-                    : 'Isikan maklumat keperluan anda di bawah untuk menjana mesej WhatsApp berformat serta-merta atau menghantar emel.'}
+                    ? 'Fill out your requirements below to prepare a WhatsApp or email draft. You must send it in the app that opens.'
+                    : 'Isikan keperluan anda di bawah untuk menyediakan draf WhatsApp atau emel. Anda perlu menghantarnya dalam aplikasi yang dibuka.'}
                 </p>
               </div>
 
-              <form onSubmit={handleFormSubmit} className="space-y-5">
+              <form ref={formRef} noValidate onSubmit={handleFormSubmit} className="space-y-5">
                 {/* Name & Company */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-bold text-slate-800">
+                    <label htmlFor="contact-name" className="block text-sm font-bold text-slate-800">
                       {lang === 'en' ? 'Your Name *' : 'Nama Anda *'}
                     </label>
                     <input
                       type="text"
                       required
+                      id="contact-name"
+                      name="name"
                       value={formData.name}
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
@@ -301,11 +309,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-bold text-slate-800">
+                    <label htmlFor="contact-company" className="block text-sm font-bold text-slate-800">
                       {lang === 'en' ? 'Company Name' : 'Nama Syarikat'}
                     </label>
                     <input
                       type="text"
+                      id="contact-company"
+                      name="company"
                       value={formData.company}
                       onChange={(e) =>
                         setFormData({ ...formData, company: e.target.value })
@@ -319,10 +329,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                 {/* Service Selection & Phone */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-bold text-slate-800">
+                    <label htmlFor="contact-service" className="block text-sm font-bold text-slate-800">
                       {lang === 'en' ? 'Service Required *' : 'Perkhidmatan Diperlukan *'}
                     </label>
                     <select
+                      id="contact-service"
+                      name="service"
                       value={formData.service}
                       onChange={(e) =>
                         setFormData({ ...formData, service: e.target.value })
@@ -341,11 +353,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-sm font-bold text-slate-800">
+                    <label htmlFor="contact-phone" className="block text-sm font-bold text-slate-800">
                       {lang === 'en' ? 'Phone / WhatsApp' : 'No. Telefon / WhatsApp'}
                     </label>
                     <input
                       type="tel"
+                      id="contact-phone"
+                      name="phone"
                       value={formData.phone}
                       onChange={(e) =>
                         setFormData({ ...formData, phone: e.target.value })
@@ -358,11 +372,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
 
                 {/* Project Location */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-bold text-slate-800">
+                  <label htmlFor="contact-location" className="block text-sm font-bold text-slate-800">
                     {lang === 'en' ? 'Project Site / Location' : 'Tapak Projek / Lokasi'}
                   </label>
                   <input
                     type="text"
+                    id="contact-location"
+                    name="location"
                     value={formData.location}
                     onChange={(e) =>
                       setFormData({ ...formData, location: e.target.value })
@@ -374,12 +390,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
 
                 {/* Message */}
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-bold text-slate-800">
+                  <label htmlFor="contact-message" className="block text-sm font-bold text-slate-800">
                     {lang === 'en' ? 'Requirements & Details *' : 'Keperluan & Perincian *'}
                   </label>
                   <textarea
                     required
                     rows={4}
+                    id="contact-message"
+                    name="message"
                     value={formData.message}
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
@@ -401,7 +419,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                   >
                     <MessageCircle className="w-5 h-5 fill-current" />
                     <span>
-                      {lang === 'en' ? 'Send via WhatsApp' : 'Hantar via WhatsApp'}
+                      {lang === 'en' ? 'Open WhatsApp Draft' : 'Buka Draf WhatsApp'}
                     </span>
                   </button>
 
@@ -412,7 +430,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                   >
                     <Mail className="w-5 h-5 text-emerald-700" />
                     <span>
-                      {lang === 'en' ? 'Send Email' : 'Kirim Emel'}
+                      {lang === 'en' ? 'Open Email Draft' : 'Buka Draf Emel'}
                     </span>
                   </button>
                 </div>
