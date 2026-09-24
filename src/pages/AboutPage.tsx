@@ -5,14 +5,13 @@ import {
   CheckCircle,
   Building,
   Briefcase,
-  ChevronDown,
   ArrowRight,
   MessageCircle,
 } from 'lucide-react';
+import { OrganisationChart } from '../components/OrganisationChart';
 import { Language } from '../types';
 import {
   COMPANY_INFO,
-  ORG_CHART,
   CORPORATE_VALUES,
   ESG_STRATEGY,
 } from '../data/content';
@@ -23,9 +22,6 @@ interface AboutPageProps {
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
-  const director = ORG_CHART.find((n) => n.name === 'N. RAVI CHANDRAN')!;
-  const departments = ORG_CHART.filter((n) => n.reportsTo === director.name);
-
   return (
     <div className="space-y-20 pb-20">
       {/* 1. HERO HEADER */}
@@ -168,78 +164,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ lang, onNavigate }) => {
         </div>
       </section>
 
-      {/* 4. EXACT ORGANISATION CHART (HTML cards with exact reporting lines) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="px-3.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 text-sm font-bold uppercase tracking-wider border border-emerald-500/30">
-              {lang === 'en' ? 'Leadership & Structure' : 'Kepimpinan & Struktur'}
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              {lang === 'en' ? 'Organisation Chart' : 'Carta Organisasi'}
-            </h2>
-            <p className="text-slate-300 text-lg leading-relaxed">
-              {lang === 'en'
-                ? 'Our organisation brings together Finance and Admin, Foreign Welfare Affairs, and Sales & Marketing under the Director.'
-                : 'Organisasi kami merangkumi Kewangan dan Pentadbiran, Hal Ehwal Kebajikan Pekerja Asing serta Jualan & Pemasaran di bawah Pengarah.'}
-            </p>
-          </div>
-
-          {/* Director Card (Top Level) */}
-          <div className="flex flex-col items-center">
-            <div className="w-full max-w-md bg-gradient-to-br from-emerald-800 to-emerald-950 rounded-2xl p-6 sm:p-8 border-2 border-emerald-500 shadow-2xl text-center space-y-2">
-              <span className="inline-block px-3 py-1 rounded bg-emerald-400 text-emerald-950 text-xs font-black uppercase tracking-widest">
-                {director.role[lang]}
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                {director.name}
-              </h3>
-              <p className="text-emerald-200 text-sm font-semibold uppercase tracking-wider">
-                {director.department[lang]}
-              </p>
-
-            </div>
-
-            {/* Connecting Line */}
-            <div className="flex flex-col items-center my-4">
-              <div className="w-0.5 h-8 bg-emerald-500"></div>
-              <div className="p-1 rounded-full bg-emerald-500 text-slate-950">
-                <ChevronDown className="w-4 h-4" />
-              </div>
-            </div>
-          </div>
-
-          {/* Department reporting lines and their managers remain grouped on mobile. */}
-          <div className="space-y-4">
-            <div className="text-center text-sm uppercase tracking-widest text-emerald-400 font-bold">
-              {lang === 'en'
-                ? 'Departments Reporting to the Director'
-                : 'Jabatan di Bawah Pengarah'}
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {departments.map((department) => (
-                <section
-                  key={department.name}
-                  className="min-w-0 bg-slate-800/90 rounded-2xl p-5 sm:p-6 border border-slate-700 space-y-4"
-                >
-                  <h3 className="text-xl font-bold text-emerald-300 break-words">
-                    {department.department[lang]}
-                  </h3>
-                  <ul className="space-y-4 border-t border-slate-700 pt-4">
-                    {ORG_CHART.filter((node) => node.reportsTo === department.name).map((manager) => (
-                      <li key={manager.name} className="rounded-xl bg-slate-900 p-4 border border-slate-700 space-y-2">
-                        <h4 className="text-xl font-bold text-white break-words">{manager.name}</h4>
-                        <p className="text-base text-slate-300">{manager.role[lang]}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 4. ORGANISATION CHART */}
+      <OrganisationChart lang={lang} />
 
       {/* 5. CORPORATE ACHIEVEMENTS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
