@@ -29,7 +29,9 @@ with sync_playwright() as p:
      cards=page.locator('[data-photo-id]');assert cards.count()==35
      assert cards.locator('a').count()==0
      assert page.locator('main a[href*="wa.me"]').count()==1
-     assert cards.locator('img').evaluate_all('(imgs)=>imgs.every(i=>getComputedStyle(i).objectFit==="contain")')
+     assert cards.locator('img').evaluate_all('(imgs)=>imgs.every(i=>getComputedStyle(i).objectFit==="cover")')
+     assert page.locator("[data-photo-group]").count()==0
+     assert cards.evaluate_all("els=>new Set(els.map(e=>e.parentElement)).size===1")
      ratios=cards.locator('img').evaluate_all('(imgs)=>imgs.map(i=>i.clientWidth/i.clientHeight)');assert all(abs(x-4/3)<0.02 for x in ratios),ratios
      counts=[5,5,16,5,4]
      nav=page.locator('main nav button')
@@ -48,8 +50,10 @@ with sync_playwright() as p:
      page.keyboard.press('ArrowRight');assert image.get_attribute('src')=='/originals/image31.png'
      page.keyboard.press('Escape');assert dialog.count()==0
      assert trigger.evaluate('(e)=>e===document.activeElement')
-     page.locator('[data-photo-group="after"]').screenshot(path=str(out/f'landscaping-after-{lang}-{width}.png'))
+     page.locator('[data-photo-grid]').screenshot(path=str(out/f'landscaping-after-{lang}-{width}.png'))
      nav.first.click()
+    page.locator('main img').evaluate_all('(imgs)=>imgs.forEach(i=>i.loading="eager")')
+    page.wait_for_function('Array.from(document.querySelectorAll("main img")).every(i=>i.complete&&i.naturalWidth>0)')
     page.evaluate('window.scrollTo(0,0)')
     page.screenshot(path=str(out/f'{route.strip("/") or "home"}-{lang}-{width}.png'),full_page=True)
     results.append(dict(width=width,route=route,lang=lang,overflow=False))
