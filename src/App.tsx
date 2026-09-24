@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Language, PortfolioItem } from './types';
 import { PORTFOLIO_ITEMS } from './data/content';
+import { ILLUSTRATIVE_ITEMS } from './data/illustrativeImages';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { LightboxModal } from './components/LightboxModal';
@@ -24,7 +25,7 @@ export default function App() {
   const [lang, setLang] = useState<Language>('en');
   const [activeLightboxItem, setActiveLightboxItem] = useState<PortfolioItem | null>(null);
   const [lightboxItems, setLightboxItems] = useState<PortfolioItem[]>(PORTFOLIO_ITEMS);
-  const openLightbox = (item: PortfolioItem, items = PORTFOLIO_ITEMS) => {
+  const openLightbox = (item: PortfolioItem, items = item.originalSrc.startsWith('/nrc-') ? ILLUSTRATIVE_ITEMS : PORTFOLIO_ITEMS) => {
     setLightboxItems(items);
     setActiveLightboxItem(item);
   };

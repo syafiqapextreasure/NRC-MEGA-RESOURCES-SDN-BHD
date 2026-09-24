@@ -23,8 +23,13 @@ with sync_playwright() as p:
     page.wait_for_function('Array.from(document.querySelectorAll("main img")).every(i=>i.complete&&i.naturalWidth>0)')
     overflow=page.evaluate('document.documentElement.scrollWidth>innerWidth')
     assert not overflow,(width,route,lang,'overflow',page.locator('main *').evaluate_all('(els)=>els.filter(e=>e.getBoundingClientRect().right>innerWidth+1).map(e=>[e.tagName,e.className,e.textContent.slice(0,60)]).slice(0,10)'))
-    assert page.locator('main img[src^="/nrc-"]').count()==0
-    assert page.locator('main img[src="/hero-background.jpg"]').count()==0
+    if route=='/portfolio':
+     assert page.locator('main img[src^="/nrc-"]').count()==0
+     assert page.locator('main img[src="/hero-background.jpg"]').count()==0
+    else:
+     assert page.locator('main img[src^="/nrc-"]').count()>0
+     assert page.locator('main img[src^="/originals/"], main img[src^="/portfolio/"]').count()==0
+     if route=='/': assert page.locator('main img[src="/hero-background.jpg"]').count()==1
     if route=='/portfolio':
      cards=page.locator('[data-photo-id]');assert cards.count()==35
      assert cards.locator('a').count()==0

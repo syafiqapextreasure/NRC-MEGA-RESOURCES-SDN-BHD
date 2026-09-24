@@ -1,3 +1,4 @@
+import { ILLUSTRATIVE_ITEMS as PORTFOLIO_ITEMS } from '../data/illustrativeImages';
 import React, { useState } from 'react';
 import {
   Hammer,
@@ -12,8 +13,8 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { Language, PortfolioItem } from '../types';
-import { SERVICES, COMPANY_INFO, PORTFOLIO_ITEMS } from '../data/content';
-import { NrcSpriteImage } from '../components/NrcSpriteImage';
+import { SERVICES, COMPANY_INFO } from '../data/content';
+import { IllustrativeImage as NrcSpriteImage } from '../components/IllustrativeImage';
 
 interface ServicesPageProps {
   lang: Language;
@@ -63,7 +64,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       case 'cleaning':
         return PORTFOLIO_ITEMS.filter((i) => i.category === 'cleaning');
       case 'landscaping':
-        return PORTFOLIO_ITEMS.filter((i) => ['02', '06', '08'].includes(i.id));
+        return PORTFOLIO_ITEMS.filter((i) => i.category === 'landscaping').slice(0, 2);
       default:
         return [];
     }

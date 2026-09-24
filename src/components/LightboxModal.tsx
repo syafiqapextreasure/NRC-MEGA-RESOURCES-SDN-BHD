@@ -59,7 +59,7 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({ item, items, lang,
         </div>
         <div className="shrink-0 border-t border-slate-800 flex items-center justify-between px-4 py-3">
           <button type="button" disabled={index <= 0} onClick={() => onSelect(items[index - 1])} aria-label={lang === 'en' ? 'Previous image' : 'Foto sebelumnya'} className="min-w-12 min-h-12 p-3 rounded-xl bg-slate-800 disabled:opacity-30"><ChevronLeft /></button>
-          <span className="text-sm text-slate-400">{lang === 'en' ? 'Original photograph' : 'Foto asal'}</span>
+          <span className="text-sm text-slate-400">{item.originalSrc.startsWith('/nrc-') ? (lang === 'en' ? 'AI illustration' : 'Ilustrasi AI') : (lang === 'en' ? 'Original photograph' : 'Foto asal')}</span>
           <button type="button" disabled={index >= items.length - 1} onClick={() => onSelect(items[index + 1])} aria-label={lang === 'en' ? 'Next image' : 'Foto seterusnya'} className="min-w-12 min-h-12 p-3 rounded-xl bg-slate-800 disabled:opacity-30"><ChevronRight /></button>
         </div>
       </div>

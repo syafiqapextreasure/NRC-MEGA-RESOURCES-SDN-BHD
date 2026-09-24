@@ -1,3 +1,5 @@
+import { ClientsSection } from '../components/ClientsSection';
+import { ILLUSTRATIVE_ITEMS as PORTFOLIO_ITEMS } from '../data/illustrativeImages';
 import React from 'react';
 import {
   Hammer,
@@ -15,9 +17,8 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { Language, PortfolioItem } from '../types';
-import { ClientsSection } from '../components/ClientsSection';
-import { NrcSpriteImage } from '../components/NrcSpriteImage';
-import { COMPANY_INFO, SERVICES, PORTFOLIO_ITEMS } from '../data/content';
+import { IllustrativeImage as NrcSpriteImage } from '../components/IllustrativeImage';
+import { COMPANY_INFO, SERVICES } from '../data/content';
 
 interface HomePageProps {
   lang: Language;
@@ -31,10 +32,17 @@ export const HomePage: React.FC<HomePageProps> = ({
   onOpenLightbox,
 }) => {
   // Get Construction photo 05 for Hero
-  const heroPhoto05 = PORTFOLIO_ITEMS.find((item) => item.id === '13')!;
+  const heroPhoto05 = PORTFOLIO_ITEMS.find((item) => item.id === '05')!;
 
   // Featured photos for homepage showcase
-  const featuredWorks = ['02', '06', '16', '17', '28', '32'].map(id => PORTFOLIO_ITEMS.find(item => item.id === id)!);
+  const featuredWorks = [
+    PORTFOLIO_ITEMS.find((item) => item.id === '01')!, // Landscaping before
+    PORTFOLIO_ITEMS.find((item) => item.id === '03')!, // Landscaping after
+    PORTFOLIO_ITEMS.find((item) => item.id === '06')!, // Rebar foundation
+    PORTFOLIO_ITEMS.find((item) => item.id === '07')!, // Night works
+    PORTFOLIO_ITEMS.find((item) => item.id === '11')!, // WWTP
+    PORTFOLIO_ITEMS.find((item) => item.id === '13')!, // Cleaning
+  ];
 
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
@@ -70,7 +78,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* Full-width Relevant White Transparent Background Image & Overlays */}
         <div className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden">
           <img
-            src={heroPhoto05.originalSrc}
+            src="/hero-background.jpg"
             alt="NRC Industrial Infrastructure and Civil Works"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-center scale-105 opacity-60 filter contrast-105"
