@@ -1,0 +1,98 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1000 420"
+  width="100%"
+  height="100%"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <defs>
+    <!-- Top Half Clip Path (above the wave) -->
+    <clipPath id="nrc-clip-top">
+      <path
+        d="M 0,0 L 1000,0 L 1000,270 
+           C 960,262 925,248 870,246 
+           C 775,242 715,282 615,288 
+           C 515,294 455,236 345,238 
+           C 240,240 145,330 30,280 
+           L 0,280 Z"
+      />
+    </clipPath>
+
+    <!-- Bottom Half Clip Path (below the wave) -->
+    <clipPath id="nrc-clip-bottom">
+      <path
+        d="M 0,420 L 1000,420 L 1000,286 
+           C 960,278 925,264 870,262 
+           C 775,258 715,298 615,304 
+           C 515,310 455,252 345,254 
+           C 240,256 145,346 30,296 
+           L 0,296 Z"
+      />
+    </clipPath>
+
+    <!-- Letter Shapes Group (Reused for both halves) -->
+    <g id="nrc-letterforms">
+      <!-- Slanted Letter N -->
+      <path
+        d="M 142,148 L 268,148 L 366,298 L 402,148 L 476,148 L 416,382 L 298,382 L 198,236 L 160,382 L 84,382 Z"
+      />
+
+      <!-- Slanted Letter R -->
+      <!-- Outer R and Inner Hole -->
+      <path
+        fill-rule="evenodd"
+        d="M 480,148 L 610,148 
+           C 655,148 688,160 702,185 
+           C 714,208 708,234 686,252 
+           C 666,268 636,276 592,276 
+           L 546,276 L 602,382 L 516,382 
+           L 468,290 L 444,290 L 396,382 L 322,382 
+           L 420,148 Z 
+           M 464,236 L 576,236 
+           C 604,236 622,230 628,218 
+           C 634,206 624,194 598,194 
+           L 486,194 Z"
+      />
+
+      <!-- Slanted Letter C -->
+      <path
+        d="M 972,174 L 888,198 
+           C 876,188 858,180 836,182 
+           C 788,186 756,220 762,265 
+           C 768,310 806,346 854,342 
+           C 882,340 904,324 918,302 
+           L 952,336 
+           C 930,366 892,386 842,388 
+           C 752,394 690,332 680,260 
+           C 670,184 728,144 826,140 
+           C 888,138 940,152 972,174 Z"
+      />
+    </g>
+  </defs>
+
+  <!-- 1. Upper Swoosh Arch (Forest Green) -->
+  <path
+    d="M 42,380 
+       C 30,290 88,150 200,80 
+       C 310,25 460,18 620,38 
+       C 760,56 880,95 965,124 
+       C 880,98 750,66 610,50 
+       C 460,34 320,44 215,96 
+       C 110,160 58,285 52,380 Z"
+    fill="#007738"
+  />
+
+  <!-- 2. Upper Half of Letters (Dark Forest Green) -->
+  <use
+    href="#nrc-letterforms"
+    fill="#004826"
+    clip-path="url(#nrc-clip-top)"
+  />
+
+  <!-- 3. Lower Half of Letters (Vibrant Emerald Green) -->
+  <use
+    href="#nrc-letterforms"
+    fill="#00843d"
+    clip-path="url(#nrc-clip-bottom)"
+  />
+</svg>
