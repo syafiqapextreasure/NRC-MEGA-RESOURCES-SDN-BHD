@@ -63,7 +63,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       case 'cleaning':
         return PORTFOLIO_ITEMS.filter((i) => i.category === 'cleaning');
       case 'landscaping':
-        return PORTFOLIO_ITEMS.filter((i) => i.category === 'landscaping').slice(0, 2);
+        return PORTFOLIO_ITEMS.filter((i) => ['02', '06', '08'].includes(i.id));
       default:
         return [];
     }
@@ -231,10 +231,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {related.map((item) => (
-                      <div
+                      <button
+                        type="button"
                         key={item.id}
                         onClick={() => onOpenLightbox(item)}
-                        className="cursor-pointer group rounded-xl overflow-hidden border border-slate-200 bg-slate-100 hover:shadow-md transition-shadow"
+                        className="text-left cursor-pointer group rounded-xl overflow-hidden border border-slate-200 bg-slate-100 hover:shadow-md transition-shadow"
                       >
                         <NrcSpriteImage
                           rect={item.rect}
@@ -244,11 +245,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                           className="w-full"
                         />
                         <div className="p-3 bg-white">
-                          <p className="text-sm font-bold text-slate-900 line-clamp-1 group-hover:text-emerald-800">
+                          <p className="text-sm font-bold text-slate-900 group-hover:text-emerald-800">
                             {item.title[lang]}
                           </p>
                         </div>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </div>

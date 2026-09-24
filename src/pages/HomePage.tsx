@@ -15,6 +15,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { Language, PortfolioItem } from '../types';
+import { ClientsSection } from '../components/ClientsSection';
 import { NrcSpriteImage } from '../components/NrcSpriteImage';
 import { COMPANY_INFO, SERVICES, PORTFOLIO_ITEMS } from '../data/content';
 
@@ -30,17 +31,10 @@ export const HomePage: React.FC<HomePageProps> = ({
   onOpenLightbox,
 }) => {
   // Get Construction photo 05 for Hero
-  const heroPhoto05 = PORTFOLIO_ITEMS.find((item) => item.id === '05')!;
+  const heroPhoto05 = PORTFOLIO_ITEMS.find((item) => item.id === '13')!;
 
   // Featured photos for homepage showcase
-  const featuredWorks = [
-    PORTFOLIO_ITEMS.find((item) => item.id === '01')!, // Landscaping before
-    PORTFOLIO_ITEMS.find((item) => item.id === '03')!, // Landscaping after
-    PORTFOLIO_ITEMS.find((item) => item.id === '06')!, // Rebar foundation
-    PORTFOLIO_ITEMS.find((item) => item.id === '07')!, // Night works
-    PORTFOLIO_ITEMS.find((item) => item.id === '11')!, // WWTP
-    PORTFOLIO_ITEMS.find((item) => item.id === '13')!, // Cleaning
-  ];
+  const featuredWorks = ['02', '06', '16', '17', '28', '32'].map(id => PORTFOLIO_ITEMS.find(item => item.id === id)!);
 
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
@@ -76,7 +70,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* Full-width Relevant White Transparent Background Image & Overlays */}
         <div className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden">
           <img
-            src="/hero-background.jpg"
+            src={heroPhoto05.originalSrc}
             alt="NRC Industrial Infrastructure and Civil Works"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-center scale-105 opacity-60 filter contrast-105"
@@ -179,6 +173,8 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </section>
+
+      <ClientsSection lang={lang} />
 
       {/* 2. SERVICES OVERVIEW SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

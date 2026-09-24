@@ -23,6 +23,11 @@ export default function App() {
 
   const [lang, setLang] = useState<Language>('en');
   const [activeLightboxItem, setActiveLightboxItem] = useState<PortfolioItem | null>(null);
+  const [lightboxItems, setLightboxItems] = useState<PortfolioItem[]>(PORTFOLIO_ITEMS);
+  const openLightbox = (item: PortfolioItem, items = PORTFOLIO_ITEMS) => {
+    setLightboxItems(items);
+    setActiveLightboxItem(item);
+  };
 
   // Listen to browser popstate (back/forward buttons)
   useEffect(() => {
@@ -58,14 +63,14 @@ export default function App() {
           <ServicesPage
             lang={lang}
             onNavigate={navigateTo}
-            onOpenLightbox={(item) => setActiveLightboxItem(item)}
+            onOpenLightbox={openLightbox}
           />
         );
       case '/portfolio':
         return (
           <PortfolioPage
             lang={lang}
-            onOpenLightbox={(item) => setActiveLightboxItem(item)}
+            onOpenLightbox={openLightbox}
           />
         );
       case '/contact':
@@ -76,7 +81,7 @@ export default function App() {
           <HomePage
             lang={lang}
             onNavigate={navigateTo}
-            onOpenLightbox={(item) => setActiveLightboxItem(item)}
+            onOpenLightbox={openLightbox}
           />
         );
     }
@@ -101,7 +106,7 @@ export default function App() {
       {/* Portfolio Lightbox Modal */}
       <LightboxModal
         item={activeLightboxItem}
-        items={PORTFOLIO_ITEMS}
+        items={lightboxItems}
         lang={lang}
         onClose={() => setActiveLightboxItem(null)}
         onSelect={(newItem) => setActiveLightboxItem(newItem)}

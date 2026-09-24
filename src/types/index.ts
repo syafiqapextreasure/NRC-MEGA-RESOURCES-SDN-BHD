@@ -31,6 +31,9 @@ export interface ServiceItem {
 }
 
 export interface PortfolioItem {
+  originalSrc: string;
+  thumbnailSrc: string;
+  sourceSlide: number;
   id: string;
   number: string;
   title: {
